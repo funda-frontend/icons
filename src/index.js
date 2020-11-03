@@ -24,7 +24,9 @@ var app = new Vue({
             this.icons.push(icons[iconName]);
           });
         })
-        .catch((error) => "An error occurred while loading the component");
+        .catch(
+          (error) => `An error occurred while loading the component: ${error}`
+        );
     },
   },
 });
