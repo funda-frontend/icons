@@ -1,0 +1,32 @@
+#from https://github.com/semantic-release/semantic-release/blob/master/docs/recipes/github-actions.md
+
+name: Release
+on:
+  push:
+    branches:
+      - master
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-18.04
+    env:
+      GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_TOKEN }}
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      GIT_AUTHOR_NAME: github-actions
+      GIT_AUTHOR_EMAIL: 44210433+github-actions@users.noreply.github.com
+      GIT_COMMITTER_NAME: github-actions
+      GIT_COMMITTER_EMAIL: 44210433+github-actions@users.noreply.github.com
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - name: Install dependencies
+        run: npm ci
+      - name: Release
+        run: npx semantic-release
