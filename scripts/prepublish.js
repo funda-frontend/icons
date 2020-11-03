@@ -4,6 +4,7 @@
  * Compiles the icons into static .js files that can be imported in the browser
  * and are tree-shakeable.
  */
+const path = require("path");
 const fs = require("fs");
 const mkdirp = require("mkdirp");
 const { filenameToTitle } = require("./utils");
@@ -18,6 +19,9 @@ mkdirp("lib/assets").then(() => readSvgIconsList());
 const readSvgIconsList = () =>
   fs.readdir(SVG_ICONS_DIR, (err, files) => {
     files.forEach((file) => {
+      let extension = path.extname(file);
+      if (extension !== ".svg") return;
+
       let title = filenameToTitle(file);
       let icon = {
         title: title,

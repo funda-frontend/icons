@@ -1,0 +1,20 @@
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="./src/index.css"/>
+</head>
+<body>
+  <div id="app">
+    <img class="logo" alt="Funda" src="https://assets.fstatic.nl/master_3202/assets/components/logo/fundawonen-logo.svg">
+    <input class="search" type="search" placeholder="Type here to search..." v-model="searchKeyword" />
+
+    <ul class="icons">
+      <li v-for="(icon, index) in filteredIcons" class="icon">
+        <span v-html="icon.svg" :title="icon.title"></span>
+        <p>{{icon.title}}</p>
+      </li>
+    </ul>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js" type="text/javascript"></script>
+  <script src="./index.js" type="text/javascript"></script>
+</body>
