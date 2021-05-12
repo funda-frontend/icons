@@ -37,11 +37,14 @@
   },
   "scripts": {
     "dev": "npm run build && webpack serve",
-    "build": "npm run prepublishOnly && webpack",
+    "build": "npm run build:esm && npm run build:cjs && npm run build:vue",
+    "build:esm": "node ./scripts/build.js esm",
+    "build:cjs": "node ./scripts/build.js cjs",
+    "build:vue": "node ./scripts/build.js vue",
     "release": "npx semantic-release",
     "minify": "svgo --config=.svgo.yml",
-    "prepare": "npm run prepublishOnly",
-    "prepublishOnly": "node ./scripts/prepublish.js"
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run build"
   },
   "husky": {
     "hooks": {

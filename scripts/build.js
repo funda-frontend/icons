@@ -7,16 +7,19 @@
 const path = require("path");
 const fs = require("fs");
 const mkdirp = require("mkdirp");
+const convert = require("./convert");
 const { filenameToTitle } = require("./utils");
 
-const INDEX_FILE = `${__dirname}/../lib/icons.js`;
-const LIB_DIR = `${__dirname}/../lib/assets`;
 const SVG_ICONS_DIR = `${__dirname}/../assets`;
-const icons = [];
+let [package] = process.argv.slice(2);
 
-mkdirp("lib/assets").then(() => readSvgIconsList());
+if (!package) throw Error("Please specify a package");
 
-const readSvgIconsList = () =>
+mkdirp(`lib/${package}`).then(() => readSvgIconsList());
+
+const readSvgIconsList = () => {
+  const icons = [];
+
   fs.readdir(SVG_ICONS_DIR, (err, files) => {
     files.forEach((file) => {
       let extension = path.extname(file);
@@ -28,20 +31,9 @@ const readSvgIconsList = () =>
         svg: fs.readFileSync(`${SVG_ICONS_DIR}/${file}`, "utf8"),
       };
 
-      icons.push(title);
-
-      // write the static .js file for the icon
-      fs.writeFileSync(
-        `${LIB_DIR}/${title}.js`,
-        `export default ${JSON.stringify(icon)};`
-      );
+      icons.push(icon);
     });
 
-    const importIcons = icons.map((i) => `import ${i} from "./assets/${i}";`);
-
-    // write our generic icons.js
-    fs.writeFileSync(
-      INDEX_FILE,
-      `${importIcons.join("")}export{${icons.join(",")}};`
-    );
+    convert[package](icons);
   });
+};
