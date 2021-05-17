@@ -33,18 +33,16 @@ header .container {
 
 .icons {
   list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
   padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 7.5rem);
+  gap: 1rem;
 }
 
 .icon {
-  width: 7.5rem;
   padding: 1rem 0 0;
   text-align: center;
   background: #f2f2f2;
-  margin: 0.5rem;
 }
 
 .icon svg {

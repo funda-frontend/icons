@@ -18,7 +18,7 @@ var app = new Vue({
   },
   methods: {
     getIcons() {
-      import(/* webpackChunkName: "icons" */ "../lib/icons")
+      import(/* webpackChunkName: "icons" */ "../lib/esm")
         .then((icons) => {
           Object.keys(icons).forEach((iconName, key) => {
             this.icons.push(icons[iconName]);
