@@ -29,6 +29,7 @@
     "husky": "^5.0.9",
     "lint-staged": "^10.2.11",
     "mkdirp": "^1.0.4",
+    "npm-run-all": "4.1.5",
     "semantic-release": "^17.1.1",
     "svgo": "^2.0.0",
     "webpack": "^5.10.3",
@@ -36,15 +37,15 @@
     "webpack-dev-server": "^3.11.0"
   },
   "scripts": {
-    "dev": "npm run build && webpack serve",
-    "build": "npm run build:esm && npm run build:cjs && npm run build:vue",
+    "dev": "run-p build:* && webpack serve --mode=development",
+    "build": "run-p build:* && webpack --mode=production",
     "build:esm": "node ./scripts/build.js esm",
     "build:cjs": "node ./scripts/build.js cjs",
     "build:vue": "node ./scripts/build.js vue",
     "release": "npx semantic-release",
     "minify": "svgo --config=.svgo.yml",
-    "prepare": "npm run build",
-    "prepublishOnly": "npm run build"
+    "prepare": "run-p build:*",
+    "prepublishOnly": "run-p build:*"
   },
   "husky": {
     "hooks": {
