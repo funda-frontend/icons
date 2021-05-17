@@ -14,14 +14,37 @@ Important: note that we use [semantic-release](https://github.com/semantic-relea
 
 ## Usage
 
+### Installation
+
     npm install @funda/icons
 
-    import { thumbsDown } from "@funda/icons";
+### ESM import
+
+    import { ThumbsDown } from "@funda/icons/lib/esm";
+    import Alert from "@funda/icons/lib/esm/alert";
+
+### CJS import
+
+    const { ThumbsDown } = require("@funda/icons/lib/cjs");
+    const Alert = require("@funda/icons/lib/cjs/alert");
+
+Both ESM and CJS format will return:
 
     /*{
         title: 'thumbs-down',
         svg: '<svg role="img" viewBox="0 0 24 24" ...'
     }*/
+
+### Vue import
+
+    import { ThumbsDown } from "@funda/icons/lib/vue";
+    import Alert from "@funda/icons/lib/vue/alert";
+
+    export default {
+        ...,
+        components: { ThumbsDown }
+        ...,
+    }
 
 ### Alternative
 
