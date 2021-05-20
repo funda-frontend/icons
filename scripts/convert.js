@@ -9,49 +9,43 @@ const writeFile = (name, content, format) => {
   fs.writeFileSync(`${LIB_DIR}/${format}/${name}`, content);
 };
 
-module.exports = {
-  cjs: (icons) => {
-    const exportIcons = [];
+const contentFormat = {
+  cjs: (icon) => `module.export = ${JSON.stringify(icon)};`,
+  esm: (icon) => `export default ${JSON.stringify(icon)};`,
+  vue: (icon) => `<template>${icon.svg}</template>`,
+};
 
-    icons.flatMap(async (icon) => {
-      let content = `module.export = ${JSON.stringify(icon)};`;
-      writeFile(`${icon.title}.js`, content, "cjs");
+const exportFormat = {
+  cjs: (title) =>
+    `module.exports.${capitalize(title)} = require('./${title}');`,
+  esm: (title) =>
+    `export { default as ${capitalize(title)} } from "./${title}";`,
+  vue: (title) =>
+    `export { default as ${capitalize(title)} } from "./${title}.vue";`,
+};
 
-      exportIcons.push(
-        `module.exports.${capitalize(icon.title)} = require('./${icon.title}');`
-      );
-    });
+const mapTo = {
+  cjs: (icon, icons) => {
+    writeFile(`${icon.title}.js`, contentFormat.cjs(icon), "cjs");
 
-    writeIndexFile(exportIcons, "cjs");
+    icons.push(exportFormat.cjs(icon.title));
   },
-  esm: (icons) => {
-    const exportIcons = [];
+  esm: (icon, icons) => {
+    writeFile(`${icon.title}.js`, contentFormat.esm(icon), "esm");
 
-    icons.flatMap(async (icon) => {
-      let content = `export default ${JSON.stringify(icon)};`;
-      writeFile(`${icon.title}.js`, content, "esm");
-
-      exportIcons.push(
-        `export { default as ${capitalize(icon.title)} } from "./${
-          icon.title
-        }";`
-      );
-    });
-
-    writeIndexFile(exportIcons, "esm");
+    icons.push(exportFormat.esm(icon.title));
   },
-  vue: (icons) => {
-    const exportIcons = [];
+  vue: (icon, icons) => {
+    writeFile(`${icon.title}.vue`, contentFormat.vue(icon), "vue");
 
-    icons.flatMap(async ({ title, svg }) => {
-      let content = `<template>${svg}</template>`;
-      writeFile(`${title}.vue`, content, "vue");
-
-      exportIcons.push(
-        `export { default as ${capitalize(title)} } from "./${title}.vue";`
-      );
-    });
-
-    writeIndexFile(exportIcons, "vue");
+    icons.push(exportFormat.vue(icon.title));
   },
+};
+
+module.exports = (icons, format) => {
+  const exportIcons = [];
+
+  icons.flatMap((icon) => mapTo[format](icon, exportIcons));
+
+  writeIndexFile(exportIcons, format);
 };

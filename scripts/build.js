@@ -11,11 +11,11 @@ const convert = require("./convert");
 const { filenameToTitle } = require("./utils");
 
 const SVG_ICONS_DIR = `${__dirname}/../assets`;
-let [package] = process.argv.slice(2);
+let [format] = process.argv.slice(2);
 
-if (!package) throw Error("Please specify a package");
+if (!format) throw Error("Please specify a format");
 
-mkdirp(`lib/${package}`).then(() => readSvgIconsList());
+mkdirp(`lib/${format}`).then(() => readSvgIconsList());
 
 const readSvgIconsList = () => {
   const icons = [];
@@ -34,6 +34,6 @@ const readSvgIconsList = () => {
       icons.push(icon);
     });
 
-    convert[package](icons);
+    convert(icons, format);
   });
 };
