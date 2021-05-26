@@ -37,14 +37,13 @@
     "webpack-dev-server": "^3.11.0"
   },
   "scripts": {
-    "dev": "run-p build:* && webpack serve --mode=development",
-    "build": "run-p build:* && webpack --mode=production",
+    "dev": "npm run prepublishOnly && webpack serve --mode=development",
+    "build": "npm run prepublishOnly && webpack --mode=production",
     "build:esm": "node ./scripts/build.js esm",
     "build:cjs": "node ./scripts/build.js cjs",
     "build:vue": "node ./scripts/build.js vue",
     "release": "npx semantic-release",
     "minify": "svgo --config=.svgo.yml",
-    "prepare": "run-p build:*",
     "prepublishOnly": "run-p build:*"
   },
   "husky": {
