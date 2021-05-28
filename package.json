@@ -12,7 +12,15 @@
     "access": "public"
   },
   "license": "MIT",
-  "main": "lib/icons.js",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./lib/esm/index.js",
+      "require": "./lib/cjs/index.js"
+    }
+  },
+  "main": "lib/cjs/index.js",
+  "module": "lib/esm/index.js",
   "files": [
     "lib",
     "assets"
