@@ -18,5 +18,6 @@ module.exports = {
         attributes: [{ attrs: "fill" }],
       },
     },
+    "inlineStyles",
   ],
 };
