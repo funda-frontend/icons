@@ -2,4 +2,8 @@ plugins:
   - addAttributesToSVGElement:
       attributes:
         - role: img
+        - fill: currentColor
   - removeDimensions: true
+  - sortAttrs: true
+  - removeAttrs:
+      attrs: fill

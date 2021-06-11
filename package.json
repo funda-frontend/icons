@@ -12,7 +12,6 @@
     "access": "public"
   },
   "license": "MIT",
-  "type": "module",
   "exports": {
     ".": {
       "import": "./lib/esm/index.js",
@@ -51,7 +50,7 @@
     "build:cjs": "node ./scripts/build.js cjs",
     "build:vue": "node ./scripts/build.js vue",
     "release": "npx semantic-release",
-    "minify": "svgo --config=.svgo.yml",
+    "minify": "svgo --config=svgo.config.js",
     "prepublishOnly": "run-p build:*"
   },
   "husky": {
