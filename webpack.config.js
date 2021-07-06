@@ -19,7 +19,7 @@ module.exports = {
       patterns: [
         {
           from: "./src/**/*.(html|css)",
-          to: "[name].[ext]",
+          to: "[name][ext]",
         },
       ],
     }),
